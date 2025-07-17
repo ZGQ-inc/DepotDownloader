@@ -237,6 +237,26 @@ namespace DepotDownloader
             }
         }
 
+        // public async Task RequestDepotKey(uint depotId, uint appid = 0)
+        // {
+        //     if (DepotKeys.ContainsKey(depotId) || bAborted)
+        //         return;
+
+        //     var depotKey = await steamApps.GetDepotDecryptionKey(depotId, appid);
+
+        //     Console.WriteLine("Got depot key for {0} result: {1}", depotKey.DepotID, depotKey.Result);
+
+        //     if (depotKey.Result != EResult.OK)
+        //     {
+        //         var DecryptionKey = string.Concat(depotKey.DepotKey.Select(b => b.ToString("x2")));
+        //         Console.WriteLine($"Depot ID: {depotKey.DepotID}");
+        //         Console.WriteLine($"DecryptionKey: {DecryptionKey}");
+        //         DepotKeys[depotKey.DepotID] = depotKey.DepotKey;
+        //     }
+
+        //     DepotKeys[depotKey.DepotID] = depotKey.DepotKey;
+        // }
+
         public async Task RequestDepotKey(uint depotId, uint appid = 0)
         {
             if (DepotKeys.ContainsKey(depotId) || bAborted)
@@ -245,18 +265,16 @@ namespace DepotDownloader
             var depotKey = await steamApps.GetDepotDecryptionKey(depotId, appid);
 
             Console.WriteLine("Got depot key for {0} result: {1}", depotKey.DepotID, depotKey.Result);
+            Console.WriteLine($"Depot ID: {depotKey.DepotID}");
+            Console.WriteLine($"DecryptionKey: {depotKey.Result}");
 
             if (depotKey.Result != EResult.OK)
             {
-                var DecryptionKey = string.Concat(depotKey.DepotKey.Select(b => b.ToString("x2")));
-                Console.WriteLine($"Depot ID: {depotKey.DepotID}");
-                Console.WriteLine($"DecryptionKey: {DecryptionKey}");
-                DepotKeys[depotKey.DepotID] = depotKey.DepotKey;
+                return;
             }
 
             DepotKeys[depotKey.DepotID] = depotKey.DepotKey;
         }
-
 
         public async Task<ulong> GetDepotManifestRequestCodeAsync(uint depotId, uint appId, ulong manifestId, string branch)
         {
