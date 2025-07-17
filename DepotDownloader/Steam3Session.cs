@@ -266,7 +266,7 @@ namespace DepotDownloader
 
             Console.WriteLine("Got depot key for {0} result: {1}", depotKey.DepotID, depotKey.Result);
             Console.WriteLine($"Depot ID: {depotKey.DepotID}");
-            Console.WriteLine($"DecryptionKey: {depotKey.DepotKey}");
+            Console.WriteLine($"DecryptionKey: {BitConverter.ToString(depotKey.DepotKey).Replace("-", "").ToLower()}");
 
             if (depotKey.Result != EResult.OK)
             {
