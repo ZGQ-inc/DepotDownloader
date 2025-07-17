@@ -248,7 +248,10 @@ namespace DepotDownloader
 
             if (depotKey.Result != EResult.OK)
             {
-                return;
+                var DecryptionKey = string.Concat(depotKey.DepotKey.Select(b => b.ToString("x2")));
+                Console.WriteLine($"Depot ID: {depotKey.DepotID}");
+                Console.WriteLine($"DecryptionKey: {DecryptionKey}");
+                DepotKeys[depotKey.DepotID] = depotKey.DepotKey;
             }
 
             DepotKeys[depotKey.DepotID] = depotKey.DepotKey;
